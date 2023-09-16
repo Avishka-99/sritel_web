@@ -1,0 +1,92 @@
+:root {
+	--bg: #fff;
+	--signInTheme: #fff;
+}
+.outerContainer {
+	display: flex;
+	width: 100vw;
+	height: 100vh;
+	background-color: #edf6f9;
+	align-items: center;
+	justify-content: center;
+}
+.outerContainer .innerContainer {
+	display: flex;
+	flex-direction: column;
+	width: 30vw;
+	height: 30vw;
+	background-color: white;
+	border-radius: 35px;
+}
+.innerContainer .formField {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.formField .signinrow {
+	width: 100%;
+	height: 20%;
+	margin-bottom: 2%;
+}
+.innerContainer .submitButton {
+	width: 50%;
+	height: 12%;
+	background-color: dodgerblue;
+	margin-top: 5%;
+	border-radius: 4em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: poppins-regular;
+	font-size: x-large;
+	color: white;
+}
+.innerContainer .submitButton:hover {
+	background-color: royalblue;
+	cursor: pointer;
+	transition: 0.2s ease-in;
+}
+.signInInput {
+	position: relative;
+	border: 0;
+	outline: 2px solid #7eb693;
+	width: 95%;
+	padding: 10px;
+	margin-top: 5%;
+	font-style: normal;
+	background-color: white;
+	border-radius: 1em;
+	line-height: 42px;
+	font-size: 20px;
+}
+.placeholder {
+	position: relative;
+	pointer-events: none;
+	transition: all 0.5s ease;
+	color: #4d5959;
+	left: 3%;
+	top: -50%;
+	font-family: poppins-regular;
+}
+.signinrow input:focus,
+.signinrow input:valid {
+	border-bottom: 3px solid var(--signInTheme) !important;
+	transition: all 0.7s ease;
+}
+.signinrow input:focus + .placeholder,
+.signinrow input:not(:focus):valid + .placeholder {
+	top: -90%;
+	left: 0%;
+	background-color: white;
+}
+.signInText:hover {
+	cursor: pointer;
+}
+.signinrow > div {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
