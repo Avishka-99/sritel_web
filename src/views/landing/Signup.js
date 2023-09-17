@@ -11,14 +11,14 @@ export default function Signin() {
 	const [confirmpassword, setConfirmPassword] = useState('');
 	const navigate = useNavigate();
 	const showToast = (data) => {
-		if (data.type == 'success') {
+		if (data.type == 'warning') {
 			ToastMessages.success(data.message);
 			ToastMessages.info('Redirectiong to OTP verification');
 			// resetFormData();
 			// setIsDisabled(true);
-			setTimeout(function () {
-				navigate('/otp');
-			}, 6000);
+			// setTimeout(function () {
+			// 	navigate('/otp');
+			// }, 6000);
 		} else if (data.type == 'error') {
 			ToastMessages.error(data.message);
 		}
@@ -54,7 +54,7 @@ export default function Signin() {
 				email: email,
 				password: password,
 			}).then((response) => {
-				console.log(response.data);
+				//console.log(response.data.message);
 				showToast(response.data);
 			});
 		}
