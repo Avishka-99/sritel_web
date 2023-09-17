@@ -1,11 +1,11 @@
 import {SET_USER} from '../constants/ActionTypes';
 const initialState = {
-	user: 'Avishka',
+	user: '',
 };
 const UserReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case SET_USER:
-			//localStorage.setItem('type', action.data);
+			localStorage.setItem('type', action.data);
 			return {
 				//counter:getFromDatabase(),
 				...state,
