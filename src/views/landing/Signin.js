@@ -17,8 +17,9 @@ export default function Signin() {
 		console.log('hello');
 		if (data.type == 'success') {
 			ToastMessages.success(data.message);
-			ToastMessages.info('Redirectiong to OTP verification');
+			ToastMessages.info('Redirecting to OTP verification');
 			localStorage.setItem('otpmail', email);
+			setIsDisabled(true);
 			// setEmail('');
 			// setPassword('');
 			// // resetFormData();
@@ -31,7 +32,7 @@ export default function Signin() {
 		} else if (data.type == 'warning') {
 			localStorage.setItem('otpmail', email);
 			ToastMessages.warning(data.message);
-			ToastMessages.info('Redirectiong to OTP verification');
+			ToastMessages.info('Redirecting to OTP verification');
 			setTimeout(function () {
 				navigate('/otp');
 			}, 1000);
