@@ -1,13 +1,17 @@
 .sidebar {
+	border-top-right-radius: 1em;
+	border-bottom-right-radius: 1em;
 	height: 100%;
-	background-color: #d3d3d3;
+	background-color: #fff;
 	color: black;
 	transition: width 0.3s ease;
 	position: relative;
 	z-index: 1;
 	top: 0;
+	box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+	/* box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px; */
 }
-.menuIcon {
+/* .menuIcon {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -23,23 +27,21 @@
 	font-weight: bold;
 	box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
 	transition: 0.2s ease-in;
-}
-/* new  ssd*/
+}*/
 .menuItem {
 	display: flex;
-	/* justify-content: center; */
 	align-items: center;
-	margin-top: 7%;
-	/* margin-left: 15%; */
-	margin-bottom: 5%;
+	/* align-items: center; */
+	/* margin-top: 7%;
+	margin-bottom: 5%; */
 	height: 4.5vw;
-	/* width: 4.5vw; */
 	border-radius: 1vw;
 }
 
 .menuItem:hover {
 	cursor: pointer;
 	transition: 0.2s ease-in;
+	/* background-color: #0096c7; */
 }
 .menuItem:hover > svg {
 	fill: #03c988;
@@ -51,7 +53,6 @@
 .sidebarButton {
 	width: 100%;
 	height: 5%;
-
 	background-color: dodgerblue;
 }
 /* expand */
@@ -62,7 +63,7 @@
 	width: 80px;
 }
 .sidebar .expanded {
-	width: 220px;
+	width: 160px;
 }
 .sidebar .expanded .menu-item {
 	justify-content: flex-start;
@@ -79,7 +80,7 @@
 .expand > svg {
 	padding: 10px;
 	margin-left: 18px;
-	background-color: #d3d3d3;
+	background-color: #fff;
 	color: black;
 	cursor: pointer;
 	rotate: 0deg;
@@ -89,7 +90,7 @@
 	rotate: 90deg;
 	padding: 10px;
 	margin-left: 18px;
-	background-color: #d3d3d3;
+	background-color: #fff;
 	color: black;
 	cursor: pointer;
 	transition: 0.2s ease-in;
@@ -97,27 +98,28 @@
 .menuItemContainer {
 	height: 90vh;
 }
-.menu-item {
+/* .menu-item {
 	display: flex;
 	align-items: left;
 	padding: 12px;
 	cursor: pointer;
 	transition: background-color 0.3s ease;
-}
+	flex-direction: row;
+} */
 
 .menu-item.active {
 	background-color: #007bff;
 	color: white;
 }
 
-.icon {
+/* .icon {
 	width: 40px;
 	text-align: center;
-}
+} */
 
-.label {
+/* .label {
 	flex: 1;
 	margin-left: 10px;
 	font-size: 16px;
-	display: none; /* Hide label by default */
-}
+	display: none;
+} */

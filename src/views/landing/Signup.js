@@ -9,16 +9,19 @@ export default function Signin() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmpassword, setConfirmPassword] = useState('');
+	const [IsDisabled, setIsDisabled] = useState(false);
 	const navigate = useNavigate();
 	const showToast = (data) => {
-		if (data.type == 'warning') {
+		if (data.type == 'success') {
 			ToastMessages.success(data.message);
-			ToastMessages.info('Redirectiong to OTP verification');
+			ToastMessages.info('Redirecting to OTP verification');
+			localStorage.setItem('otpmail', email);
+			setIsDisabled(true);
 			// resetFormData();
 			// setIsDisabled(true);
-			// setTimeout(function () {
-			// 	navigate('/otp');
-			// }, 6000);
+			setTimeout(function () {
+				navigate('/otp');
+			}, 6000);
 		} else if (data.type == 'error') {
 			ToastMessages.error(data.message);
 		}
@@ -111,9 +114,13 @@ export default function Signin() {
 						<input className='signUpInput' type='password' onChange={(event) => setConfirmPassword(event.target.value)} value={confirmpassword} required></input>
 						<label className='placeholder'>Confirm password*</label>
 					</div>
-					<div className='submitButton' onClick={handleSubmit}>
-						Sign Up
-					</div>
+					{IsDisabled ? (
+						<div className='submitButton'>Sign up</div>
+					) : (
+						<div className='submitButton' onClick={handleSubmit}>
+							Sign up
+						</div>
+					)}
 					<div style={{display: 'flex', flexDirection: 'row'}}>
 						<span>Already registered?</span>
 						<span className='signInText' style={{textDecoration: 'underline', color: 'dodgerblue'}} onClick={() => navigate('/')}>
