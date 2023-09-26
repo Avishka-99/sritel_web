@@ -2,7 +2,7 @@
 	border-top-right-radius: 1em;
 	border-bottom-right-radius: 1em;
 	height: 100%;
-	background-color: #fff;
+	background-color: #12213d;
 	color: black;
 	transition: width 0.3s ease;
 	position: relative;
@@ -63,7 +63,7 @@
 	width: 80px;
 }
 .sidebar .expanded {
-	width: 160px;
+	width: 170px;
 }
 .sidebar .expanded .menu-item {
 	justify-content: flex-start;
@@ -80,8 +80,7 @@
 .expand > svg {
 	padding: 10px;
 	margin-left: 18px;
-	background-color: #fff;
-	color: black;
+	color: white;
 	cursor: pointer;
 	rotate: 0deg;
 	transition: 0.2s ease-in;
@@ -90,13 +89,16 @@
 	rotate: 90deg;
 	padding: 10px;
 	margin-left: 18px;
-	background-color: #fff;
-	color: black;
+	color: white;
 	cursor: pointer;
 	transition: 0.2s ease-in;
 }
 .menuItemContainer {
 	height: 90vh;
+}
+.menuLabel {
+	font-family: poppins-regular;
+	color: white;
 }
 /* .menu-item {
 	display: flex;
