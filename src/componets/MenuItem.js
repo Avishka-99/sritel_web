@@ -8,11 +8,11 @@ const MenuItem = (props) => {
 			{/* <div style={{backgroundColor: 'red', width: '100%', height: '50%'}}></div> */}
 			{props.expanded ? (
 				<div style={{height: '100%', display: 'flex', alignItems: 'center', marginLeft: '15%', justifyContent: 'center'}}>
-					<MenuItemIcon icon={props.icon} color={props.active === props.index ? '#03C988' : '#6F767F'} className='menuIcon' />
+					<MenuItemIcon icon={props.icon} color={props.active === props.index ? '#fff' : '#fff'} className='menuIcon' />
 				</div>
 			) : (
 				<div style={{height: '100%', display: 'flex', alignItems: 'center', marginLeft: '15%', justifyContent: 'center'}}>
-					<MenuItemIcon icon={props.icon} color={props.active === props.index ? '#03C988' : '#6F767F'} className='menuIcon' />
+					<MenuItemIcon icon={props.icon} color={props.active === props.index ? '#fff' : '#fff'} className='menuIcon' />
 				</div>
 			)}
 			{/* <div style={{height: '100%', display: 'flex', alignItems: 'center', width: '60%'}}>
