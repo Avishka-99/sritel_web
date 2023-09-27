@@ -46,9 +46,10 @@ export default function Signin() {
 			}).then((response) => {
 				console.log(response.data);
 				if (response.data.type == 'success') {
+
 					if (response.data.user) {
 						dispatch(SetUserAction(response.data.user));
-						//localStorage.setItem('user', response.data.user);
+						localStorage.setItem("user_id", response.data.user_id)
 						navigate('/home');
 					} else {
 						showToast(response.data);

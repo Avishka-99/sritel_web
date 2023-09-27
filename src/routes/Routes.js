@@ -12,3 +12,8 @@ export const adminRoutes = [
 	{id: 2, path: '/packages', element: <UserViews.AdminPackages />},
 	{id: 3, path: '/staff', element: <UserViews.AdminStaff />},
 ];
+export const customerAgentRoutes = [
+	{id: 1, path: '/home', element: <UserViews.CustomerAgentDashboard />},
+	{id: 2, path: '/customerSupport', element: <UserViews.AgentSupport />},
+];
+
