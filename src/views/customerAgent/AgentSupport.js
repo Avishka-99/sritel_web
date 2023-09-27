@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../css/agentCustomer/support.css';
 
-function CustomerSupport() {
+function AgentSupport() {
   const [messages, setMessages] = useState([
     'Hello!',
     'Hi there!',
@@ -41,4 +41,5 @@ function CustomerSupport() {
   );
 }
 
-export default CustomerSupport;
+export default AgentSupport;
+

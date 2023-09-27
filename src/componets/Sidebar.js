@@ -35,6 +35,12 @@ const ShowSidebar = (props) => {
 		{id: 3, icon: <PeopleIcon sx={{fontSize: 40, fill: '#6F767F'}} />, label: 'Staff', link: 'staff', index: '3'},
 		{id: 4, icon: <LogoutIcon sx={{fontSize: 40, fill: '#6F767F'}} />, label: 'Logout', link: 'logout', index: '4'},
 	];
+	const customerAgent = [
+		{id: 1, icon: <HomeIcon sx={{fontSize: 40, fill: '#6F767F'}} />, label: 'Home', link: 'home', index: '1'},
+		{id: 2, icon: <SupportAgentIcon sx={{fontSize: 40, fill: '#6F767F'}} />, label: 'Support', link: 'customerSupport', index: '2'},
+	    {id: 3, icon: <LogoutIcon sx={{fontSize: 40, fill: '#6F767F'}} />, label: 'Logout', link: 'logout', index: '3'},
+	];
+	
 	//console.log(restaurant[0].icon.props.sx.fontSize)
 	const navigateTo = (page, index) => {
 		setActive(index);
@@ -71,8 +77,22 @@ const ShowSidebar = (props) => {
 				</div>
 			</div>
 		);
+	}	else if (props.type == 'customerAgent') {
+		return (
+			<div className={`sidebar ${expanded ? 'expanded' : 'collapsed'}`} onSelect={(item) => console.log(item)}>
+				<div className={expanded ? 'expand-toggle' : 'expand'} onClick={toggleSidebar}>
+					{expanded ? <MenuOutlinedIcon /> : <MenuOutlinedIcon />}
+				</div>
+				<div className='menuItemContainer'>
+					{customerAgent.map((item) => (
+						<MenuItem expanded={expanded ? true : false} key={item.id} icon={item.icon} labelMargin={expanded ? {marginLeft: '10%', height: '100%', display: 'flex', alignItems: 'center'} : {marginLeft: '0%', height: '100%', display: 'flex', alignItems: 'center'}} label={expanded ? item.label : null} style={{width: '100%'}} fun={navigateTo} link={item.link} index={item.index} active={Active} />
+					))}
+				</div>
+			</div>
+		);
 	}
 };
+
 export default function Sidebar(props) {
 	const [showSidebar, setShowSidebar] = useState(true);
 
