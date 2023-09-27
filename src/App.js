@@ -31,7 +31,7 @@ function App() {
 					<Route path='/' element={<Signin />}></Route>
 					<Route path='/signup' element={<Signup />}></Route>
 					<Route path='/otp' element={<Otp />}></Route>
-					<Route element={<ProtectedRoutes isSignedIn={user} />}>{user == 'Customer' ? UserRoutes.customerRoutes.map((item) => <Route key={item.id} path={item.path} element={item.element}></Route>) : <Route />}</Route>
+					<Route element={<ProtectedRoutes isSignedIn={user} />}>{user == 'Customer' ? UserRoutes.customerRoutes.map((item) => <Route key={item.id} path={item.path} element={item.element}></Route>) : user == 'Admin' ? UserRoutes.adminRoutes.map((item) => <Route key={item.id} path={item.path} element={item.element}></Route>) : <Route />}</Route>
 				</Routes>
 			</div>
 		</div>
