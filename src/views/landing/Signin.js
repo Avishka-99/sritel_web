@@ -62,16 +62,16 @@ export default function Signin() {
 		}
 	};
 	return (
-		<div className='outerContainer'>
-			<div className='innerContainer'>
+		<div className='signInOuterContainer'>
+			<div className='signInInnerContainer'>
 				<div className='formFields'>
 					<div className='signinrow'>
 						<input className='signInInput' type='text' onChange={(event) => setEmail(event.target.value)} value={email} required></input>
-						<label className='placeholder'>User name*</label>
+						<label className='signInPlaceholder'>User name*</label>
 					</div>
 					<div className='signinrow'>
 						<input className='signInInput' type='password' onChange={(event) => setPassword(event.target.value)} value={password} required></input>
-						<label className='placeholder'>Password*</label>
+						<label className='signInPlaceholder'>Password*</label>
 					</div>
 					{IsDisabled ? (
 						<div className='submitButton'>Sign In</div>
