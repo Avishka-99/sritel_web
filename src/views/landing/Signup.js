@@ -102,15 +102,15 @@ export default function Signin() {
 		<div className='outerContainer'>
 			<div className='innerContainer'>
 				<div className='formFields'>
-					<div className='signinrow'>
+					<div className='signUpRow'>
 						<input className='signUpInput' type='text' onChange={(event) => setEmail(event.target.value)} value={email} required></input>
 						<label className='placeholder'>User name*</label>
 					</div>
-					<div className='signinrow'>
+					<div className='signUpRow'>
 						<input className='signUpInput' type='password' onChange={(event) => setPassword(event.target.value)} value={password} required></input>
 						<label className='placeholder'>Password*</label>
 					</div>
-					<div className='signinrow'>
+					<div className='signUpRow'>
 						<input className='signUpInput' type='password' onChange={(event) => setConfirmPassword(event.target.value)} value={confirmpassword} required></input>
 						<label className='placeholder'>Confirm password*</label>
 					</div>

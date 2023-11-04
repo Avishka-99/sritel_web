@@ -7,6 +7,9 @@ import * as API_ENDPOINTS from '../../api/ApiEndpoints';
 import {useNavigate} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {SetUserAction} from '../../actions/UserActions';
+import Typewriter from 'typewriter-effect';
+import io from 'socket.io-client';
+const socket = io.connect('http://localhost:5001');
 export default function Signin() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -63,16 +66,57 @@ export default function Signin() {
 		}
 	};
 	return (
-		<div className='outerContainer'>
-			<div className='innerContainer'>
+		<div className='signInOuterContainer'>
+			<div className='Title'>Sritel Communications</div>
+			<div className='loginPhone'></div>
+			<div className='signInInnerContainer'>
 				<div className='formFields'>
 					<div className='signinrow'>
 						<input className='signInInput' type='text' onChange={(event) => setEmail(event.target.value)} value={email} required></input>
-						<label className='placeholder'>User name*</label>
+						<label className='signInPlaceholder'>User name*</label>
 					</div>
 					<div className='signinrow'>
 						<input className='signInInput' type='password' onChange={(event) => setPassword(event.target.value)} value={password} required></input>
-						<label className='placeholder'>Password*</label>
+						<label className='signInPlaceholder'>Password*</label>
+					</div>
+					{IsDisabled ? (
+						<div className='submitButton'>Sign In</div>
+					) : (
+						<div className='submitButton' onClick={handleSubmit}>
+							Sign In
+						</div>
+					)}
+
+					<div style={{display: 'flex', flexDirection: 'row'}}>
+						<span className='notregisteredtext'>Not registered?</span>
+						<span className='signInText' style={{textDecoration: 'underline', color: 'white'}} onClick={() => navigate('/signup')}>
+							Sign up
+						</span>
+					</div>
+				</div>
+			</div>
+			{/* <div className='aboutus' style={{width: '40%'}}>
+				<div className='Title' style={{width: '80%'}}>
+					About us
+				</div>
+				<div className='content'>
+					<Typewriter
+						onInit={(typewriter) => {
+							typewriter.typeString('GeeksForGeeks').pauseFor(1000).deleteAll().typeString('Welcomes You').start();
+						}}
+					/>
+				</div>
+			</div> */}
+
+			{/* <div className='signInInnerContainer'>
+				<div className='formFields'>
+					<div className='signinrow'>
+						<input className='signInInput' type='text' onChange={(event) => setEmail(event.target.value)} value={email} required></input>
+						<label className='signInPlaceholder'>User name*</label>
+					</div>
+					<div className='signinrow'>
+						<input className='signInInput' type='password' onChange={(event) => setPassword(event.target.value)} value={password} required></input>
+						<label className='signInPlaceholder'>Password*</label>
 					</div>
 					{IsDisabled ? (
 						<div className='submitButton'>Sign In</div>
@@ -89,7 +133,7 @@ export default function Signin() {
 						</span>
 					</div>
 				</div>
-			</div>
+			</div> */}
 			<Toast duration={3000} />
 		</div>
 	);

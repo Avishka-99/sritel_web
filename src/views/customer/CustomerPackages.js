@@ -68,6 +68,7 @@ export default function CustomerPackages() {
 		console.log('Hello');
 	};
 	const handleSubmit = (name) => {
+		console.log(name)
 		setChecked(name);
 	};
 	return (
