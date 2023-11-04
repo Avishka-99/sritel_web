@@ -30,6 +30,10 @@
 	font-family: poppins-semibold;
 	src: url('./assets/fonts/Poppins-SemiBold.ttf');
 }
+@font-face {
+	font-family: Itim-Regular;
+	src: url('./assets/fonts/Itim-Regular.ttf');
+}
 .appContainer {
 	display: flex;
 	flex-direction: row;
