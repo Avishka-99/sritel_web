@@ -25,10 +25,10 @@ const ShowSidebar = (props) => {
   })*/
 	//console.log(user);
 	const customer = [
-		{id: 1, icon: <HomeIcon sx={{fontSize: 40, fill: '#6F767F'}} />, label: 'Home', link: 'home', index: '1'},
-		{id: 2, icon: <FourGMobiledataIcon sx={{fontSize: 40, fill: '#6F767F'}} />, label: 'Packages', link: 'packages', index: '2'},
-		{id: 3, icon: <SupportAgentIcon sx={{fontSize: 40, fill: '#6F767F'}} />, label: 'Support', link: 'support', index: '3'},
-		{id: 4, icon: <LogoutIcon sx={{fontSize: 40, fill: '#6F767F'}} />, label: 'Logout', link: 'logout', index: '4'},
+		// {id: 1, icon: <HomeIcon sx={{fontSize: 40, fill: '#6F767F'}} />, label: 'Home', link: 'home', index: '1'},
+		{id: 1, icon: <FourGMobiledataIcon sx={{fontSize: 40, fill: '#6F767F'}} />, label: 'Packages', link: 'home', index: '1'},
+		{id: 2, icon: <SupportAgentIcon sx={{fontSize: 40, fill: '#6F767F'}} />, label: 'Support', link: 'support', index: '2'},
+		{id: 3, icon: <LogoutIcon sx={{fontSize: 40, fill: '#6F767F'}} />, label: 'Logout', link: 'logout', index: '3'},
 	];
 	const admin = [
 		// {id: 1, icon: <HomeIcon sx={{fontSize: 40, fill: '#6F767F'}} />, label: 'Home', link: 'home', index: '1'},
