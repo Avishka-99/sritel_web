@@ -1,20 +1,40 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../../css/staff/staff.css';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import {Axios_packages} from '../../api/Axios';
+import {Axios_packages, Axios_user} from '../../api/Axios';
 import * as API_ENDPOINTS from '../../api/ApiEndpoints';
 export default function AdminPackages() {
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [name, setName] = useState('');
-	const [description, setDescription] = useState('');
-	const [dataLimit, setDataLimit] = useState('');
-	const [voiceLimit, setVoiceLimit] = useState('');
-	const [smsLimit, setSmsLimit] = useState('');
-	const [price, setPrice] = useState('');
-	const [type, setType] = useState('');
+	const [contact, setContact] = useState('');
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [users, setUsers] = useState('');
+
+	let index = 0;
+
+	useEffect(() => {
+		Axios_user.get(API_ENDPOINTS.GET_CUSTOMERS_URL).then((response) => {
+			setUsers(response.data);
+			console.log(users)
+		});
+  	},[users]);
+
+	const handleSubmit = () => {
+        Axios_user.post(API_ENDPOINTS.ADD_CUSTOMER_URL, {
+            name: name,
+            email: email,
+            password: password,
+            contact_no: contact,
+        }).then((response) => {
+			console.log(response);
+			closeModal();
+        });
+    };
+
 	const style = {
 		position: 'absolute',
 		top: '50%',
@@ -24,269 +44,211 @@ export default function AdminPackages() {
 		bgcolor: 'background.paper',
 		boxShadow: 24,
 	};
-	const handleSubmit = () => {
-		Axios_packages.post(API_ENDPOINTS.ADD_PACKAGE_URL, {});
-	};
 	const closeModal = () => {
 		setIsModalVisible(!setIsModalVisible);
 		setName('');
-		setPrice('');
-		setDataLimit('');
-		setDescription('');
-		setVoiceLimit('');
-		setSmsLimit('');
+		setContact("");
+		setEmail("");
+		setPassword("");
 	};
 	return (
-		<div className='adminPackages' style={{width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}>
-			<div
-				className='adminPackagesTopRow'
-				style={{
-					width: '90%',
-					height: '12%',
-					display: 'flex',
-					alignItems: 'center',
-					justifyContent: 'flex-end',
-				}}
-			>
-				<div className='adminPackageAddButton' onClick={() => setIsModalVisible(!isModalVisible)}>
-					Add
-				</div>
-			</div>
-			<Modal onClose={closeModal} open={isModalVisible} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
-				<Box sx={style}>
-					<div
-						style={{
-							backgroundColor: 'white',
-							width: '40vw',
-							height: '40vw',
-							display: 'flex',
-							flexDirection: 'column',
-							alignItems: 'center',
-						}}
-					>
-						<div className='addNewPackageTitle' style={{display: 'flex', height: '7%', alignItems: 'center', justifyContent: 'center'}}>
-							Customer registration form
-						</div>
-						<div className='adminPackagerow'>
-							<input placeholder='Name*' className='adminPackageInput' type='text' onChange={(event) => setName(event.target.value)} value={name} required></input>
-							{/* <label className='adminPackagePlaceholder'>User name*</label> */}
-						</div>
-						<div className='adminPackagerow'>
-							<textarea className='packageDescriptionInput' onChange={(event) => setDescription(event.target.value)} value={description} name='postContent' placeholder='Description*' rows={4} cols={40} />
-						</div>
-						<div
-							className='adminPackagerow'
-							style={{
-								display: 'flex',
-								flexDirection: 'row',
-								width: '90%',
-								height: '10%',
-								marginTop: ' 15%',
-								justifyContent: 'space-around',
-							}}
-						>
-							<div className='signUpRadioItem'>
-								<input type='radio' autoComplete='off' value='all' name='userRole' checked={type == 'all'} onChange={(event) => setType(event.target.value)} />
-								<label className='signUpRadioOption'>All</label>
-							</div>
-							<div className='signUpRadioItem'>
-								<input type='radio' autoComplete='off' value='data' checked={type == 'data'} name='data' onChange={(event) => setType(event.target.value)} />
-								<label className='signUpRadioOption'>Data</label>
-							</div>
-							<div className='signUpRadioItem'>
-								<input type='radio' autoComplete='off' value='voice' name='userRole' checked={type == 'voice'} onChange={(event) => setType(event.target.value)} />
-								<label className='signUpRadioOption'>Voice</label>
-							</div>
-						</div>
-						<div
-							className='adminPackagerow'
-							style={{
-								display: 'flex',
-								flexDirection: 'row',
-								width: '90%',
-								height: '20%',
-								marginBottom: '2%',
-							}}
-						>
-							<div>
-								<input
-									disabled={type == 'voice'}
-									placeholder='Data limit*'
-									className='adminPackageInput'
-									style={{
-										width: '80%',
-									}}
-									type='text'
-									onChange={(event) => setDataLimit(event.target.value)}
-									value={dataLimit}
-									required
-								></input>
-								{/* <label className='adminPackagePlaceholder'>Data limit</label> */}
-							</div>
-							<div>
-								<input
-									disabled={type == 'data'}
-									placeholder='Voice limit'
-									style={{
-										width: '80%',
-									}}
-									className='adminPackageInput'
-									type='text'
-									onChange={(event) => setVoiceLimit(event.target.value)}
-									value={voiceLimit}
-									required
-								></input>
-								{/* <label className='adminPackagePlaceholder'>Voice limit</label> */}
-							</div>
-							<div>
-								<input
-									disabled={type == 'data'}
-									placeholder='SMS limit'
-									style={{
-										width: '80%',
-									}}
-									className='adminPackageInput'
-									type='text'
-									onChange={(event) => setSmsLimit(event.target.value)}
-									value={smsLimit}
-									required
-								></input>
-								{/* <label className='adminPackagePlaceholder'>Sms limit</label> */}
-							</div>
-						</div>
-						<div className='adminPackagerow' style={{marginTop: '-8%'}}>
-							<input placeholder='Price*' className='adminPackageInput' type='text' onChange={(event) => setPrice(event.target.value)} value={price} required></input>
-							{/* <label className='adminPackagePlaceholder'>Price*</label> */}
-						</div>
-						<div className='adminPackageAddButton' style={{height: '10%', width: '40%', color: 'white'}} onClick={handleSubmit}>
-							Add
-						</div>
-					</div>
-				</Box>
-			</Modal>
-			<div
-				className='adminPackagesBottomRow'
-				style={{
-					width: '90%',
-					height: '60%',
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'flex-start',
-					overflow: 'hidden',
-					tableLayout: 'fixed',
-				}}
-			>
-				<table class='admin-styled-table'>
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Description</th>
-							<th>Data limit</th>
-							<th>Voice limit</th>
-							<th>SMS limit</th>
-							<th>Price</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	);
+        <div
+            className="adminPackages"
+            style={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
+            }}
+        >
+            <div
+                className="adminPackagesTopRow"
+                style={{
+                    width: "90%",
+                    height: "12%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-end",
+                }}
+            >
+                <div
+                    className="adminPackageAddButton"
+                    onClick={() => setIsModalVisible(!isModalVisible)}
+                >
+                    Add
+                </div>
+            </div>
+            <Modal
+                onClose={closeModal}
+                open={isModalVisible}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <div
+                        style={{
+                            backgroundColor: "white",
+                            width: "40vw",
+                            height: "40vw",
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            paddingTop: "50px",
+                        }}
+                    >
+                        <div
+                            className="addNewPackageTitle"
+                            style={{
+                                display: "flex",
+                                height: "7%",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                fontSize: "20px",
+                                paddingBottom: "25px",
+                            }}
+                        >
+                            Customer registration form
+                        </div>
+                        <div
+                            className="adminPackagerow"
+                            style={{
+                                marginTop: "-20px",
+                            }}
+                        >
+                            <input
+                                placeholder="Name*"
+                                className="adminPackageInput"
+                                type="text"
+                                onChange={(event) =>
+                                    setName(event.target.value)
+                                }
+                                value={name}
+                                required
+                            ></input>
+                            {/* <label className='adminPackagePlaceholder'>User name*</label> */}
+                        </div>
+
+                        <div className="adminPackagerow">
+                            <input
+                                placeholder="Email*"
+                                className="adminPackageInput"
+                                type="email"
+                                onChange={(event) =>
+                                    setEmail(event.target.value)
+                                }
+                                value={email}
+                                required
+                            ></input>
+                            {/* <label className='adminPackagePlaceholder'>Price*</label> */}
+                        </div>
+
+                        <div className="adminPackagerow">
+                            <input
+                                placeholder="Contact Number*"
+                                className="adminPackageInput"
+                                type="text"
+                                onChange={(event) =>
+                                    setContact(event.target.value)
+                                }
+                                value={contact}
+                                required
+                            ></input>
+                            {/* <label className='adminPackagePlaceholder'>Price*</label> */}
+                        </div>
+
+                        <div className="adminPackagerow">
+                            <input
+                                placeholder="Password*"
+                                className="adminPackageInput"
+                                type="password"
+                                onChange={(event) =>
+                                    setPassword(event.target.value)
+                                }
+                                value={password}
+                                required
+                            ></input>
+                            {/* <label className='adminPackagePlaceholder'>Price*</label> */}
+                        </div>
+
+                        <div
+                            className="adminPackageAddButton"
+                            style={{
+                                height: "10%",
+                                width: "40%",
+                                color: "white",
+                                marginTop: "40px",
+                            }}
+                            onClick={handleSubmit}
+                        >
+                            Add
+                        </div>
+                    </div>
+                </Box>
+            </Modal>
+
+            {/* ====================================================================== */}
+            {/* ====================================================================== */}
+            <div
+                className="adminPackagesBottomRow"
+                style={{
+                    width: "90%",
+                    height: "60%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "flex-start",
+                    overflow: "hidden",
+                    tableLayout: "fixed",
+                }}
+            >
+                <table class="admin-styled-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Contact</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {users &&
+                            users.map((element) => (
+                                <tr class="active-row">
+                                    <td>{element.name}</td>
+                                    <td>
+                                        {element.contact_no
+                                            ? element.contact_no
+                                            : "----------"}
+                                    </td>
+                                    <td>{element.email}</td>
+                                    <td>
+                                        {element.state === "verified"
+                                            ? "verified"
+                                            : "unverified"}
+                                    </td>
+                                    <td>
+                                        <center>
+                                            <button
+                                                style={{
+                                                    height: "30px",
+                                                    width: "120px",
+                                                    background: "yellow",
+                                                    border: "none",
+                                                    borderRadius: "7px",
+                                                    cursor: "pointer",
+                                                }}
+                                            >
+                                                View
+                                            </button>
+                                        </center>
+                                    </td>
+                                </tr>
+                            ))}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    );
 }

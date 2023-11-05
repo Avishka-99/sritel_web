@@ -1,9 +1,19 @@
-import React, {useState,} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Modal, Box, Typography} from '@mui/material';
 import '../../css/customer/customerpackages.css';
 import PackageCard from '../../componets/PackageCard';
+import {Axios_packages, Axios_bill} from '../../api/Axios';
+import * as API_ENDPOINTS from '../../api/ApiEndpoints';
+import StripeCard from '../../componets/StripeCard';
+import {useSelector} from 'react-redux';
 export default function CustomerPackages() {
+	const userid = useSelector((state) => state.UserReducer.userid);
+	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [checked, setChecked] = useState('All');
+	const [packages, setPackages] = useState('');
+	const [allPackages, setAllPackages] = useState('');
+	const [amount, setAmount] = useState();
+	const [id, setId] = useState();
 	const package_names = [
 		{
 			name: 'All',
@@ -15,52 +25,56 @@ export default function CustomerPackages() {
 			name: 'Voice',
 		},
 	];
-	const work_and_learn_packages = [
-		{
-			name: '7 Days',
-			quota: 25,
-			duration: 7,
-			platforms: ['zoom', 'teams'],
-			price: 285,
-		},
-		{
-			name: '21 Days',
-			quota: 80,
-			duration: 21,
-			platforms: ['zoom', 'teams', 'meet'],
-			price: 840,
-		},
-		{
-			name: '30 Days',
-			quota: 80,
-			duration: 30,
-			platforms: ['zoom', 'teams', 'meet'],
-			price: 1100,
-		},
-	];
-	const unlimited_packages = [
-		{
-			name: '24 Hours',
-			price: 329,
-			duration: 24,
-		},
-		{
-			name: '3 Days',
-			price: 1100,
-			duration: 3,
-		},
-		{
-			name: '30 Days',
-			price: 9999,
-			duration: 30,
-		},
-	];
+	useEffect(() => {
+		Axios_packages.post(API_ENDPOINTS.GET_ALL_PACKAGES).then((response) => {
+			console.log(response.data);
+			setPackages(response.data);
+			setAllPackages(response.data);
+		});
+	}, []);
 	const activate = () => {
 		console.log('Hello');
 	};
 	const handleSubmit = (name) => {
-		console.log(name)
+		if (name == 'All') {
+			const newArr = allPackages.filter((item) => item);
+			setPackages(newArr);
+		} else if (name == 'Data') {
+			const newArr = allPackages.filter((item) => item.type == 'data');
+			setPackages(newArr);
+		} else if (name == 'Voice') {
+			const newArr = allPackages.filter((item) => item.type == 'voice');
+			setPackages(newArr);
+		}
+		//console.log(name);
 		setChecked(name);
+	};
+	const openModal = (id, price) => {
+		setId(id);
+		setAmount(price);
+		setIsModalVisible(!isModalVisible);
+	};
+	const addToBill = (id, price) => {
+		Axios_packages.post(API_ENDPOINTS.ACTIVATE_PACKAGE, {
+			user: userid,
+			id: id,
+		}).then((response_2) => {
+			Axios_bill.post(API_ENDPOINTS.ADD_TO_BILL, {
+				user: userid,
+				amount: price,
+			}).then((response) => {
+				console.log(response);
+			});
+		});
+	};
+	const style = {
+		position: 'absolute',
+		top: '50%',
+		left: '45vw',
+		transform: 'translate(-50%, -50%)',
+		width: 400,
+		bgcolor: 'background.paper',
+		boxShadow: 24,
 	};
 	return (
 		<div
@@ -78,7 +92,76 @@ export default function CustomerPackages() {
 				))}
 			</div>
 			<div className='packageContainer'>
-				{checked == 'All' ? (
+				<div
+					className='adminPackagesBottomRow'
+					style={{
+						width: '90%',
+						height: '60%',
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'flex-start',
+						overflow: 'hidden',
+						tableLayout: 'fixed',
+					}}
+				>
+					<table class='admin-styled-table'>
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Description</th>
+								<th>Data limit</th>
+								<th>Voice limit</th>
+								<th>SMS limit</th>
+								<th>Price</th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							{packages &&
+								packages.map((item) => (
+									<tr>
+										<td>{item.name}</td>
+										<td>{item.description}</td>
+										<td>{item.data_limit ? item.data_limit : '-'}</td>
+										<td>{item.voice_limit ? item.voice_limit : '-'}</td>
+										<td>{item.sms_limit ? item.sms_limit : '-'}</td>
+										<td>{item.price}</td>
+										<td>
+											<div onClick={() => openModal(item.package_id, item.price)} className='packageBuyButton'>
+												Activate
+											</div>
+										</td>
+										<td>
+											<div onClick={() => addToBill(item.package_id, item.price)} className='packageBuyButton' style={{backgroundColor: 'tomato'}}>
+												Add to bill
+											</div>
+										</td>
+									</tr>
+								))}
+						</tbody>
+					</table>
+				</div>
+				<Modal onClose={() => setIsModalVisible(!isModalVisible)} open={isModalVisible} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
+					<Box sx={style}>
+						<div
+							style={{
+								backgroundColor: 'white',
+								width: '40vw',
+								height: '17vw',
+								display: 'flex',
+								flexDirection: 'column',
+								justifyContent: 'center',
+							}}
+						>
+							<div className='processingtext'>
+								Processing <span className='rstext'>RS.{amount}</span>
+							</div>
+							<StripeCard amount={amount} id={id} />
+						</div>
+					</Box>
+				</Modal>
+				{/* {checked == 'All' ? (
 					<>
 						<PackageCard type='type8' title='Work and learn' data={work_and_learn_packages} fun={activate} />
 						<PackageCard type='type28' title='Unlimited' data={unlimited_packages} fun={activate} />
@@ -89,18 +172,8 @@ export default function CustomerPackages() {
 					<PackageCard type='type2' title='Unlimited' data={unlimited_packages} fun={activate} />
 				) : (
 					<></>
-				)}
+				)} */}
 			</div>
 		</div>
-		// <Modal open={true} onClose={() => {}} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
-		// 	<Box sx={{width: 400}}>
-		// 		<Typography id='modal-modal-title' variant='h6' component='h2'>
-		// 			Text in a modal
-		// 		</Typography>
-		// 		<Typography id='modal-modal-description' sx={{mt: 2}}>
-		// 			Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-		// 		</Typography>
-		// 	</Box>
-		// </Modal>
 	);
 }
