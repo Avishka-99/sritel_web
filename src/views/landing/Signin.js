@@ -6,7 +6,7 @@ import { Axios_user } from '../../api/Axios';
 import * as API_ENDPOINTS from '../../api/ApiEndpoints';
 import {useNavigate} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
-import {SetUserAction} from '../../actions/UserActions';
+import {SetUserAction,SetUserId} from '../../actions/UserActions';
 import Typewriter from 'typewriter-effect';
 import io from 'socket.io-client';
 const socket = io.connect('http://localhost:5001');
@@ -52,6 +52,7 @@ export default function Signin() {
 
 					if (response.data.user) {
 						dispatch(SetUserAction(response.data.user));
+						dispatch(SetUserId(response.data.id));
 						localStorage.setItem("user_id", response.data.user_id)
 						navigate('/home');
 					} else {
