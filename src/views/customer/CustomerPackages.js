@@ -2,11 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {Modal, Box, Typography} from '@mui/material';
 import '../../css/customer/customerpackages.css';
 import PackageCard from '../../componets/PackageCard';
-import {Axios_packages} from '../../api/Axios';
+import {Axios_packages, Axios_bill} from '../../api/Axios';
 import * as API_ENDPOINTS from '../../api/ApiEndpoints';
 import StripeCard from '../../componets/StripeCard';
-import { UseSelector } from 'react-redux/es/hooks/useSelector';
+import {useSelector} from 'react-redux';
 export default function CustomerPackages() {
+	const userid = useSelector((state) => state.UserReducer.userid);
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [checked, setChecked] = useState('All');
 	const [packages, setPackages] = useState('');
@@ -22,46 +23,6 @@ export default function CustomerPackages() {
 		},
 		{
 			name: 'Voice',
-		},
-	];
-	const work_and_learn_packages = [
-		{
-			name: '7 Days',
-			quota: 25,
-			duration: 7,
-			platforms: ['zoom', 'teams'],
-			price: 285,
-		},
-		{
-			name: '21 Days',
-			quota: 80,
-			duration: 21,
-			platforms: ['zoom', 'teams', 'meet'],
-			price: 840,
-		},
-		{
-			name: '30 Days',
-			quota: 80,
-			duration: 30,
-			platforms: ['zoom', 'teams', 'meet'],
-			price: 1100,
-		},
-	];
-	const unlimited_packages = [
-		{
-			name: '24 Hours',
-			price: 329,
-			duration: 24,
-		},
-		{
-			name: '3 Days',
-			price: 1100,
-			duration: 3,
-		},
-		{
-			name: '30 Days',
-			price: 9999,
-			duration: 30,
 		},
 	];
 	useEffect(() => {
@@ -92,6 +53,19 @@ export default function CustomerPackages() {
 		setId(id);
 		setAmount(price);
 		setIsModalVisible(!isModalVisible);
+	};
+	const addToBill = (id, price) => {
+		Axios_packages.post(API_ENDPOINTS.ACTIVATE_PACKAGE, {
+			user: userid,
+			id: id,
+		}).then((response_2) => {
+			Axios_bill.post(API_ENDPOINTS.ADD_TO_BILL, {
+				user: userid,
+				amount: price,
+			}).then((response) => {
+				console.log(response);
+			});
+		});
 	};
 	const style = {
 		position: 'absolute',
@@ -140,6 +114,7 @@ export default function CustomerPackages() {
 								<th>SMS limit</th>
 								<th>Price</th>
 								<th></th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -155,6 +130,11 @@ export default function CustomerPackages() {
 										<td>
 											<div onClick={() => openModal(item.package_id, item.price)} className='packageBuyButton'>
 												Activate
+											</div>
+										</td>
+										<td>
+											<div onClick={() => addToBill(item.package_id, item.price)} className='packageBuyButton' style={{backgroundColor: 'tomato'}}>
+												Add to bill
 											</div>
 										</td>
 									</tr>
