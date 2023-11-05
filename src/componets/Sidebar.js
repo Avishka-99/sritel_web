@@ -11,6 +11,7 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import PersonIcon from '@mui/icons-material/Person';
 import {useNavigate} from 'react-router-dom';
 import {Widgets} from '@mui/icons-material';
+import ReceiptIcon from '@mui/icons-material/Receipt';
 const ShowSidebar = (props) => {
 	const navigate = useNavigate();
 	var user = localStorage.getItem('type');
@@ -25,9 +26,9 @@ const ShowSidebar = (props) => {
   })*/
 	//console.log(user);
 	const customer = [
-		// {id: 1, icon: <HomeIcon sx={{fontSize: 40, fill: '#6F767F'}} />, label: 'Home', link: 'home', index: '1'},
 		{id: 1, icon: <FourGMobiledataIcon sx={{fontSize: 40, fill: '#6F767F'}} />, label: 'Packages', link: 'home', index: '1'},
 		{id: 2, icon: <SupportAgentIcon sx={{fontSize: 40, fill: '#6F767F'}} />, label: 'Support', link: 'support', index: '2'},
+		{id: 1, icon: <ReceiptIcon sx={{fontSize: 40, fill: '#6F767F'}} />, label: 'Bill', link: 'bill', index: '1'},
 		{id: 3, icon: <LogoutIcon sx={{fontSize: 40, fill: '#6F767F'}} />, label: 'Logout', link: 'logout', index: '3'},
 	];
 	const admin = [
