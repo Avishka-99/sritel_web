@@ -14,4 +14,3 @@ export const ADD_STAFF_URL = '/api/addstaff';
 export const GET_STAFF_URL ='/api/getallstaff';
 export const ADD_TO_BILL = '/api/addtobill';
 export const GET_BILL_DETAILS = '/api/getbills';
-
