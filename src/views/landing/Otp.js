@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import '../../css/otp.css';
 import Toast from '../../componets/Toast';
 import * as ToastMessages from '../../componets/ToastMessages';
-import Axios from '../../api/Axios';
+import {Axios_user} from '../../api/Axios';
 import * as API_ENDPOINTS from '../../api/ApiEndpoints';
 import {useNavigate} from 'react-router-dom';
 import OtpInput from 'react-otp-input';
@@ -19,7 +19,7 @@ export default function Otp() {
 	});
 	const handleSubmit = (e) => {
 		try {
-			Axios.post(API_ENDPOINTS.VERIFY_USER_URL, {
+			Axios_user.post(API_ENDPOINTS.VERIFY_USER_URL, {
 				email: localStorage.getItem('otpmail'),
 				otp: otp,
 			}).then((response) => {

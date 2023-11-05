@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import '../../css/signup.css';
 import Toast from '../../componets/Toast';
 import * as ToastMessages from '../../componets/ToastMessages';
-import Axios from '../../api/Axios';
+import {Axios_user} from '../../api/Axios';
 import * as API_ENDPOINTS from '../../api/ApiEndpoints';
 import {useNavigate} from 'react-router-dom';
 export default function Signin() {
@@ -53,7 +53,7 @@ export default function Signin() {
 		}
 
 		if (isClean) {
-			Axios.post(API_ENDPOINTS.SIGNUP_URL, {
+			Axios_user.post(API_ENDPOINTS.SIGNUP_URL, {
 				email: email,
 				password: password,
 			}).then((response) => {
