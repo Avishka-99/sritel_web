@@ -1,12 +1,15 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../../css/admin/admin.css';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+
 import {Axios_packages} from '../../api/Axios';
 import * as API_ENDPOINTS from '../../api/ApiEndpoints';
+
 export default function AdminPackages() {
+	const [details,setDetails]=useState([]);
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
@@ -39,6 +42,25 @@ export default function AdminPackages() {
 	};
 	const closeModal = () => {
 		setIsModalVisible(!setIsModalVisible);
+
+		setName('')
+		setPrice('')
+		setDataLimit('')
+		setDescription('')
+		setVoiceLimit('')
+		setSmsLimit('')
+	}
+
+	useEffect(()=>{
+        async function getPackageDetails(){
+		    const res = await Axios_packages.get(API_ENDPOINTS.GET_PACKAGE_URL);
+			setDetails(res.data);
+		};
+		getPackageDetails();
+	},[])
+
+    console.log(details);
+
 		setName('');
 		setPrice('');
 		setDataLimit('');
@@ -58,6 +80,7 @@ export default function AdminPackages() {
 			setType(value);
 		}
 	};
+
 	return (
 		<div className='adminPackages' style={{width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}>
 			<div
@@ -210,102 +233,31 @@ export default function AdminPackages() {
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
+						{details.map((d) => (
+							<tr key={d.package_id}  >
+								<td>{d.name}</td>
+								<td>{d.description}</td>
+								<td>{d.data_limit===null ?(
+									<p>-</p>
+								):(
+									<p>{d.data_limit}</p>
+								)}
+								</td>
+								<td>{d.voice_limit===null ?(
+									<p>-</p>
+								):(
+									<p>{d.voice_limit}</p>
+								)}
+								</td>
+								<td>{d.sms_limit===null ?(
+									<p>-</p>
+								):(
+									<p>{d.sms_limit}</p>
+								)}
+								</td>
+								<td>{d.price}</td>
+							</tr>
+						))}
 					</tbody>
 				</table>
 			</div>
