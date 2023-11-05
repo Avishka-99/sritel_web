@@ -10,3 +10,8 @@ export const adminRoutes = [
 	// {id: 2, path: '/packages', element: <UserViews.AdminPackages />},
 	{id: 2, path: '/staff', element: <UserViews.AdminStaff />},
 ];
+export const staffRoutes = [
+	{id: 1, path: '/home', element: <UserViews.StaffCustomers />},
+	// {id: 2, path: '/packages', element: <UserViews.AdminPackages />},
+	{id: 2, path: '/assist', element: <UserViews.StaffChat />},
+];

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import '../../css/admin/admin.css';
+import '../../css/staff/staff.css';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -14,7 +14,7 @@ export default function AdminPackages() {
 	const [voiceLimit, setVoiceLimit] = useState('');
 	const [smsLimit, setSmsLimit] = useState('');
 	const [price, setPrice] = useState('');
-	const [type, setType] = useState('all');
+	const [type, setType] = useState('');
 	const style = {
 		position: 'absolute',
 		top: '50%',
@@ -25,17 +25,7 @@ export default function AdminPackages() {
 		boxShadow: 24,
 	};
 	const handleSubmit = () => {
-		Axios_packages.post(API_ENDPOINTS.ADD_PACKAGE_URL, {
-			name: name,
-			description: description,
-			data: dataLimit,
-			voice: voiceLimit,
-			sms: smsLimit,
-			price: price,
-			type:type,
-		}).then((response) => {
-			console.log(response);
-		});
+		Axios_packages.post(API_ENDPOINTS.ADD_PACKAGE_URL, {});
 	};
 	const closeModal = () => {
 		setIsModalVisible(!setIsModalVisible);
@@ -45,18 +35,6 @@ export default function AdminPackages() {
 		setDescription('');
 		setVoiceLimit('');
 		setSmsLimit('');
-	};
-	const setOption = (value) => {
-		if (value == 'data') {
-			setVoiceLimit('');
-			setSmsLimit('');
-			setType(value);
-		} else if (value == 'voice') {
-			setDataLimit('');
-			setType(value);
-		} else if (value == 'all') {
-			setType(value);
-		}
 	};
 	return (
 		<div className='adminPackages' style={{width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}>
@@ -87,7 +65,7 @@ export default function AdminPackages() {
 						}}
 					>
 						<div className='addNewPackageTitle' style={{display: 'flex', height: '7%', alignItems: 'center', justifyContent: 'center'}}>
-							Add new package
+							Customer registration form
 						</div>
 						<div className='adminPackagerow'>
 							<input placeholder='Name*' className='adminPackageInput' type='text' onChange={(event) => setName(event.target.value)} value={name} required></input>
@@ -108,15 +86,15 @@ export default function AdminPackages() {
 							}}
 						>
 							<div className='signUpRadioItem'>
-								<input type='radio' autoComplete='off' value='all' name='userRole' checked={type == 'all'} onChange={(event) => setOption(event.target.value)} />
+								<input type='radio' autoComplete='off' value='all' name='userRole' checked={type == 'all'} onChange={(event) => setType(event.target.value)} />
 								<label className='signUpRadioOption'>All</label>
 							</div>
 							<div className='signUpRadioItem'>
-								<input type='radio' autoComplete='off' value='data' checked={type == 'data'} name='data' onChange={(event) => setOption(event.target.value)} />
+								<input type='radio' autoComplete='off' value='data' checked={type == 'data'} name='data' onChange={(event) => setType(event.target.value)} />
 								<label className='signUpRadioOption'>Data</label>
 							</div>
 							<div className='signUpRadioItem'>
-								<input type='radio' autoComplete='off' value='voice' name='userRole' checked={type == 'voice'} onChange={(event) => setOption(event.target.value)} />
+								<input type='radio' autoComplete='off' value='voice' name='userRole' checked={type == 'voice'} onChange={(event) => setType(event.target.value)} />
 								<label className='signUpRadioOption'>Voice</label>
 							</div>
 						</div>
