@@ -1,13 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import '../../css/admin/admin.css';
+import React, {useState} from 'react';
+import '../../css/staff/staff.css';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { Axios_packages } from '../../api/Axios';
-import * as API_ENDPOINTS from '../../api/ApiEndpoints'
+import {Axios_packages} from '../../api/Axios';
+import * as API_ENDPOINTS from '../../api/ApiEndpoints';
 export default function AdminPackages() {
-	const [details,setDetails]=useState([]);
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
@@ -15,7 +14,7 @@ export default function AdminPackages() {
 	const [voiceLimit, setVoiceLimit] = useState('');
 	const [smsLimit, setSmsLimit] = useState('');
 	const [price, setPrice] = useState('');
-	const [type, setType] = useState('all');
+	const [type, setType] = useState('');
 	const style = {
 		position: 'absolute',
 		top: '50%',
@@ -26,40 +25,10 @@ export default function AdminPackages() {
 		boxShadow: 24,
 	};
 	const handleSubmit = () => {
-		
-        Axios_packages.post(API_ENDPOINTS.ADD_PACKAGE_URL,{
-			
-                 name:name,
-				 description:description,
-				 data:dataLimit,
-				 voice:voiceLimit,
-				 sms:smsLimit,
-				 type:type,
-				 price:price
-			
-		})
+		Axios_packages.post(API_ENDPOINTS.ADD_PACKAGE_URL, {});
 	};
 	const closeModal = () => {
 		setIsModalVisible(!setIsModalVisible);
-
-		setName('')
-		setPrice('')
-		setDataLimit('')
-		setDescription('')
-		setVoiceLimit('')
-		setSmsLimit('')
-	}
-
-	useEffect(()=>{
-        async function getPackageDetails(){
-		    const res = await Axios_packages.get(API_ENDPOINTS.GET_PACKAGE_URL);
-			setDetails(res.data);
-		};
-		getPackageDetails();
-	},[])
-
-    console.log(details);
-
 		setName('');
 		setPrice('');
 		setDataLimit('');
@@ -67,19 +36,6 @@ export default function AdminPackages() {
 		setVoiceLimit('');
 		setSmsLimit('');
 	};
-	const setOption = (value) => {
-		if (value == 'data') {
-			setVoiceLimit('');
-			setSmsLimit('');
-			setType(value);
-		} else if (value == 'voice') {
-			setDataLimit('');
-			setType(value);
-		} else if (value == 'all') {
-			setType(value);
-		}
-	};
-
 	return (
 		<div className='adminPackages' style={{width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}>
 			<div
@@ -109,7 +65,7 @@ export default function AdminPackages() {
 						}}
 					>
 						<div className='addNewPackageTitle' style={{display: 'flex', height: '7%', alignItems: 'center', justifyContent: 'center'}}>
-							Add new package
+							Customer registration form
 						</div>
 						<div className='adminPackagerow'>
 							<input placeholder='Name*' className='adminPackageInput' type='text' onChange={(event) => setName(event.target.value)} value={name} required></input>
@@ -130,15 +86,15 @@ export default function AdminPackages() {
 							}}
 						>
 							<div className='signUpRadioItem'>
-								<input type='radio' autoComplete='off' value='all' name='userRole' checked={type == 'all'} onChange={(event) => setOption(event.target.value)} />
+								<input type='radio' autoComplete='off' value='all' name='userRole' checked={type == 'all'} onChange={(event) => setType(event.target.value)} />
 								<label className='signUpRadioOption'>All</label>
 							</div>
 							<div className='signUpRadioItem'>
-								<input type='radio' autoComplete='off' value='data' checked={type == 'data'} name='data' onChange={(event) => setOption(event.target.value)} />
+								<input type='radio' autoComplete='off' value='data' checked={type == 'data'} name='data' onChange={(event) => setType(event.target.value)} />
 								<label className='signUpRadioOption'>Data</label>
 							</div>
 							<div className='signUpRadioItem'>
-								<input type='radio' autoComplete='off' value='voice' name='userRole' checked={type == 'voice'} onChange={(event) => setOption(event.target.value)} />
+								<input type='radio' autoComplete='off' value='voice' name='userRole' checked={type == 'voice'} onChange={(event) => setType(event.target.value)} />
 								<label className='signUpRadioOption'>Voice</label>
 							</div>
 						</div>
@@ -232,31 +188,102 @@ export default function AdminPackages() {
 						</tr>
 					</thead>
 					<tbody>
-						{details.map((d) => (
-							<tr key={d.package_id}  >
-								<td>{d.name}</td>
-								<td>{d.description}</td>
-								<td>{d.data_limit===null ?(
-									<p>-</p>
-								):(
-									<p>{d.data_limit}</p>
-								)}
-								</td>
-								<td>{d.voice_limit===null ?(
-									<p>-</p>
-								):(
-									<p>{d.voice_limit}</p>
-								)}
-								</td>
-								<td>{d.sms_limit===null ?(
-									<p>-</p>
-								):(
-									<p>{d.sms_limit}</p>
-								)}
-								</td>
-								<td>{d.price}</td>
-							</tr>
-						))}
+						<tr>
+							<td>Dom</td>
+							<td>6000</td>
+						</tr>
+						<tr class='active-row'>
+							<td>Melissa</td>
+							<td>5150</td>
+						</tr>
+						<tr>
+							<td>Dom</td>
+							<td>6000</td>
+						</tr>
+						<tr class='active-row'>
+							<td>Melissa</td>
+							<td>5150</td>
+						</tr>
+						<tr>
+							<td>Dom</td>
+							<td>6000</td>
+						</tr>
+						<tr class='active-row'>
+							<td>Melissa</td>
+							<td>5150</td>
+						</tr>
+						<tr>
+							<td>Dom</td>
+							<td>6000</td>
+						</tr>
+						<tr class='active-row'>
+							<td>Melissa</td>
+							<td>5150</td>
+						</tr>
+						<tr>
+							<td>Dom</td>
+							<td>6000</td>
+						</tr>
+						<tr class='active-row'>
+							<td>Melissa</td>
+							<td>5150</td>
+						</tr>
+						<tr>
+							<td>Dom</td>
+							<td>6000</td>
+						</tr>
+						<tr class='active-row'>
+							<td>Melissa</td>
+							<td>5150</td>
+						</tr>
+						<tr>
+							<td>Dom</td>
+							<td>6000</td>
+						</tr>
+						<tr class='active-row'>
+							<td>Melissa</td>
+							<td>5150</td>
+						</tr>
+						<tr>
+							<td>Dom</td>
+							<td>6000</td>
+						</tr>
+						<tr class='active-row'>
+							<td>Melissa</td>
+							<td>5150</td>
+						</tr>
+						<tr>
+							<td>Dom</td>
+							<td>6000</td>
+						</tr>
+						<tr class='active-row'>
+							<td>Melissa</td>
+							<td>5150</td>
+						</tr>
+						<tr>
+							<td>Dom</td>
+							<td>6000</td>
+						</tr>
+						<tr class='active-row'>
+							<td>Melissa</td>
+							<td>5150</td>
+						</tr>
+						<tr>
+							<td>Dom</td>
+							<td>6000</td>
+						</tr>
+						<tr class='active-row'>
+							<td>Melissa</td>
+							<td>5150</td>
+						</tr>
+						<tr>
+							<td>Dom</td>
+							<td>6000</td>
+						</tr>
+						<tr class='active-row'>
+							<td>Melissa</td>
+							<td>5150</td>
+						</tr>
 					</tbody>
 				</table>
 			</div>

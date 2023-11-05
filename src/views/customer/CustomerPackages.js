@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,} from 'react';
 import {Modal, Box, Typography} from '@mui/material';
 import '../../css/customer/customerpackages.css';
 import PackageCard from '../../componets/PackageCard';
@@ -6,22 +6,13 @@ export default function CustomerPackages() {
 	const [checked, setChecked] = useState('All');
 	const package_names = [
 		{
-			name: 'Work and learn',
+			name: 'All',
 		},
 		{
-			name: 'Unlimited',
+			name: 'Data',
 		},
 		{
-			name: 'Daily',
-		},
-		{
-			name: 'Standard',
-		},
-		{
-			name: 'Social media',
-		},
-		{
-			name: 'Time based',
+			name: 'Voice',
 		},
 	];
 	const work_and_learn_packages = [
