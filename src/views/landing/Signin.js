@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import '../../css/signin.css';
 import Toast from '../../componets/Toast';
 import * as ToastMessages from '../../componets/ToastMessages';
-import Axios from '../../api/Axios';
+import { Axios_user } from '../../api/Axios';
 import * as API_ENDPOINTS from '../../api/ApiEndpoints';
 import {useNavigate} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
@@ -43,7 +43,7 @@ export default function Signin() {
 	};
 	const handleSubmit = (e) => {
 		try {
-			Axios.post(API_ENDPOINTS.SIGNIN_URL, {
+			Axios_user.post(API_ENDPOINTS.SIGNIN_URL, {
 				email: email,
 				password: password,
 			}).then((response) => {
