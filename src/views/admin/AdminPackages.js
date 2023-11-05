@@ -9,7 +9,7 @@ import {Axios_packages} from '../../api/Axios';
 import * as API_ENDPOINTS from '../../api/ApiEndpoints';
 
 export default function AdminPackages() {
-	const [details,setDetails]=useState([]);
+	const [details, setDetails] = useState([]);
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
@@ -35,31 +35,13 @@ export default function AdminPackages() {
 			voice: voiceLimit,
 			sms: smsLimit,
 			price: price,
-			type:type,
+			type: type,
 		}).then((response) => {
 			console.log(response);
 		});
 	};
 	const closeModal = () => {
 		setIsModalVisible(!setIsModalVisible);
-
-		setName('')
-		setPrice('')
-		setDataLimit('')
-		setDescription('')
-		setVoiceLimit('')
-		setSmsLimit('')
-	}
-
-	useEffect(()=>{
-        async function getPackageDetails(){
-		    const res = await Axios_packages.get(API_ENDPOINTS.GET_PACKAGE_URL);
-			setDetails(res.data);
-		};
-		getPackageDetails();
-	},[])
-
-    console.log(details);
 
 		setName('');
 		setPrice('');
@@ -68,6 +50,24 @@ export default function AdminPackages() {
 		setVoiceLimit('');
 		setSmsLimit('');
 	};
+
+	useEffect(() => {
+		async function getPackageDetails() {
+			const res = await Axios_packages.get(API_ENDPOINTS.GET_PACKAGE_URL);
+			setDetails(res.data);
+		}
+		getPackageDetails();
+	}, []);
+
+	console.log(details);
+
+	setName('');
+	setPrice('');
+	setDataLimit('');
+	setDescription('');
+	setVoiceLimit('');
+	setSmsLimit('');
+
 	const setOption = (value) => {
 		if (value == 'data') {
 			setVoiceLimit('');
@@ -234,27 +234,12 @@ export default function AdminPackages() {
 					</thead>
 					<tbody>
 						{details.map((d) => (
-							<tr key={d.package_id}  >
+							<tr key={d.package_id}>
 								<td>{d.name}</td>
 								<td>{d.description}</td>
-								<td>{d.data_limit===null ?(
-									<p>-</p>
-								):(
-									<p>{d.data_limit}</p>
-								)}
-								</td>
-								<td>{d.voice_limit===null ?(
-									<p>-</p>
-								):(
-									<p>{d.voice_limit}</p>
-								)}
-								</td>
-								<td>{d.sms_limit===null ?(
-									<p>-</p>
-								):(
-									<p>{d.sms_limit}</p>
-								)}
-								</td>
+								<td>{d.data_limit === null ? <p>-</p> : <p>{d.data_limit}</p>}</td>
+								<td>{d.voice_limit === null ? <p>-</p> : <p>{d.voice_limit}</p>}</td>
+								<td>{d.sms_limit === null ? <p>-</p> : <p>{d.sms_limit}</p>}</td>
 								<td>{d.price}</td>
 							</tr>
 						))}
