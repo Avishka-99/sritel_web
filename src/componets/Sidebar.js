@@ -92,6 +92,7 @@ const ShowSidebar = (props) => {
 		);
 	}
 };
+
 export default function Sidebar(props) {
 	const [showSidebar, setShowSidebar] = useState(true);
 
