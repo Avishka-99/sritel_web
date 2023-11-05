@@ -26,7 +26,7 @@
 	align-items: center;
 	justify-content: center;
 }
-.formFields .signinrow {
+.formFields .signUpRow {
 	width: 90%;
 	height: 20%;
 	margin-bottom: 2%;
@@ -71,13 +71,13 @@
 	top: -37%;
 	font-family: poppins-regular;
 }
-.signinrow input:focus,
-.signinrow input:valid {
+.signUpRow input:focus,
+.signUpRow input:valid {
 	border-bottom: 3px solid var(--signInTheme) !important;
 	transition: all 0.7s ease;
 }
-.signinrow input:focus + .placeholder,
-.signinrow input:not(:focus):valid + .placeholder {
+.signUpRow input:focus + .placeholder,
+.signUpRow input:not(:focus):valid + .placeholder {
 	top: -80%;
 	left: 0%;
 	background-color: white;

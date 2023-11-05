@@ -2,18 +2,21 @@ import React, {useState} from 'react';
 import '../../css/signup.css';
 import Toast from '../../componets/Toast';
 import * as ToastMessages from '../../componets/ToastMessages';
-import Axios from '../../api/Axios';
+import {Axios_user} from '../../api/Axios';
 import * as API_ENDPOINTS from '../../api/ApiEndpoints';
 import {useNavigate} from 'react-router-dom';
 export default function Signin() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmpassword, setConfirmPassword] = useState('');
+	const [IsDisabled, setIsDisabled] = useState(false);
 	const navigate = useNavigate();
 	const showToast = (data) => {
 		if (data.type == 'success') {
 			ToastMessages.success(data.message);
-			ToastMessages.info('Redirectiong to OTP verification');
+			ToastMessages.info('Redirecting to OTP verification');
+			localStorage.setItem('otpmail', email);
+			setIsDisabled(true);
 			// resetFormData();
 			// setIsDisabled(true);
 			setTimeout(function () {
@@ -50,11 +53,11 @@ export default function Signin() {
 		}
 
 		if (isClean) {
-			Axios.post(API_ENDPOINTS.SIGNUP_URL, {
+			Axios_user.post(API_ENDPOINTS.SIGNUP_URL, {
 				email: email,
 				password: password,
 			}).then((response) => {
-				console.log(response.data);
+				//console.log(response.data.message);
 				showToast(response.data);
 			});
 		}
@@ -99,21 +102,25 @@ export default function Signin() {
 		<div className='outerContainer'>
 			<div className='innerContainer'>
 				<div className='formFields'>
-					<div className='signinrow'>
+					<div className='signUpRow'>
 						<input className='signUpInput' type='text' onChange={(event) => setEmail(event.target.value)} value={email} required></input>
 						<label className='placeholder'>User name*</label>
 					</div>
-					<div className='signinrow'>
+					<div className='signUpRow'>
 						<input className='signUpInput' type='password' onChange={(event) => setPassword(event.target.value)} value={password} required></input>
 						<label className='placeholder'>Password*</label>
 					</div>
-					<div className='signinrow'>
+					<div className='signUpRow'>
 						<input className='signUpInput' type='password' onChange={(event) => setConfirmPassword(event.target.value)} value={confirmpassword} required></input>
 						<label className='placeholder'>Confirm password*</label>
 					</div>
-					<div className='submitButton' onClick={handleSubmit}>
-						Sign Up
-					</div>
+					{IsDisabled ? (
+						<div className='submitButton'>Sign up</div>
+					) : (
+						<div className='submitButton' onClick={handleSubmit}>
+							Sign up
+						</div>
+					)}
 					<div style={{display: 'flex', flexDirection: 'row'}}>
 						<span>Already registered?</span>
 						<span className='signInText' style={{textDecoration: 'underline', color: 'dodgerblue'}} onClick={() => navigate('/')}>
