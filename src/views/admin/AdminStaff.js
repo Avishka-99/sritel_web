@@ -1,20 +1,22 @@
-import React, {useState} from 'react';
+import React, {useEffect,useState} from 'react';
 import '../../css/admin/admin.css';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import {Axios_packages} from '../../api/Axios';
+import {Axios_user} from '../../api/Axios';
 import * as API_ENDPOINTS from '../../api/ApiEndpoints';
 export default function AdminStaff() {
+	const [details,setDetails]=useState([]);
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [contactNo, setContactno] = useState('');
-	const [voiceLimit, setVoiceLimit] = useState('');
-	const [smsLimit, setSmsLimit] = useState('');
-	const [price, setPrice] = useState('');
-	const [type, setType] = useState('');
+	// const [voiceLimit, setVoiceLimit] = useState('');
+	// const [smsLimit, setSmsLimit] = useState('');
+	// const [price, setPrice] = useState('');
+	const [type, setType] = useState('Staff');
 	const style = {
 		position: 'absolute',
 		top: '50%',
@@ -25,13 +27,22 @@ export default function AdminStaff() {
 		boxShadow: 24,
 	};
 	const handleSubmit = () => {
-		Axios_packages.post(API_ENDPOINTS.ADD_PACKAGE_URL, {});
+		Axios_packages.post(API_ENDPOINTS.ADD_STAFF_URL, {});
 	};
 	const closeModal = () => {
 		setIsModalVisible(!setIsModalVisible);
 		setName('');
 		setContactno('');
 	};
+	
+    useEffect(()=>{
+        async function getStaffDetails(){
+		    const res = await Axios_user.get(API_ENDPOINTS.GET_STAFF_URL);
+			setDetails(res.data);
+		};
+		getStaffDetails();
+	},[])
+
 	return (
 		<div className='adminPackages' style={{width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}>
 			<div
@@ -68,10 +79,10 @@ export default function AdminStaff() {
 							{/* <label className='adminPackagePlaceholder'>User name*</label> */}
 						</div>
 						<div className='adminPackagerow'>
-							<input placeholder='Email*' className='adminPackageInput' type='text' onChange={(event) => setName(event.target.value)} value={email} required></input>
+							<input placeholder='Email*' className='adminPackageInput' type='text' onChange={(event) => setEmail(event.target.value)} value={email} required></input>
 						</div>
 						<div className='adminPackagerow'>
-							<input placeholder='Contact no*' className='adminPackageInput' type='text' onChange={(event) => setName(event.target.value)} value={contactNo} required></input>
+							<input placeholder='Contact no*' className='adminPackageInput' type='text' onChange={(event) => setContactno(event.target.value)} value={contactNo} required></input>
 						</div>
 						<div className='adminPackageAddButton' style={{height: '10%', width: '40%', color: 'white'}} onClick={handleSubmit}>
 							Add
@@ -100,102 +111,14 @@ export default function AdminStaff() {
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
-						<tr>
-							<td>Dom</td>
-							<td>6000</td>
-						</tr>
-						<tr class='active-row'>
-							<td>Melissa</td>
-							<td>5150</td>
-						</tr>
+					    {details.map((d) => (
+							<tr key={d.package_id}  >
+								<td>{d.name}</td>
+								<td>{d.email}</td>
+								<td>{d.contact_no}</td>
+							</tr>
+						))}
+						
 					</tbody>
 				</table>
 			</div>
