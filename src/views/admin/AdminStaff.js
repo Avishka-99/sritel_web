@@ -13,10 +13,12 @@ export default function AdminStaff() {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [contactNo, setContactno] = useState('');
+	
 	// const [voiceLimit, setVoiceLimit] = useState('');
 	// const [smsLimit, setSmsLimit] = useState('');
 	// const [price, setPrice] = useState('');
 	const [type, setType] = useState('Staff');
+	
 	const style = {
 		position: 'absolute',
 		top: '50%',
@@ -27,7 +29,15 @@ export default function AdminStaff() {
 		boxShadow: 24,
 	};
 	const handleSubmit = () => {
-		Axios_packages.post(API_ENDPOINTS.ADD_STAFF_URL, {});
+		Axios_user.post(API_ENDPOINTS.ADD_STAFF_URL, {
+		
+				name:name,
+				email:email,
+				contactNo:contactNo,
+				type:type
+				
+			
+		});
 	};
 	const closeModal = () => {
 		setIsModalVisible(!setIsModalVisible);

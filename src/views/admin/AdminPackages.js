@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Axios_packages } from '../../api/Axios';
 import * as API_ENDPOINTS from '../../api/ApiEndpoints'
-import { async } from 'q';
 export default function AdminPackages() {
 	const [details,setDetails]=useState([]);
 	const [isModalVisible, setIsModalVisible] = useState(false);
@@ -27,7 +26,16 @@ export default function AdminPackages() {
 		boxShadow: 24,
 	};
 	const handleSubmit = () => {
-		Axios_packages.post(API_ENDPOINTS.ADD_PACKAGE_URL,{
+		
+        Axios_packages.post(API_ENDPOINTS.ADD_PACKAGE_URL,{
+			
+                 name:name,
+				 description:description,
+				 data:dataLimit,
+				 voice:voiceLimit,
+				 sms:smsLimit,
+				 type:type,
+				 price:price
 			
 		})
 	};
